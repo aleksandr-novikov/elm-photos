@@ -6,12 +6,24 @@ import Html.Attributes exposing (class, src)
 import Html.Events exposing (onClick)
 
 
+type Msg
+    = Like
+    | Unlike
+
+
+type alias Model =
+    { url : String
+    , caption : String
+    , liked : Bool
+    }
+
+
 baseUrl : String
 baseUrl =
     "https://programming-elm.com/"
 
 
-initialModel : { url : String, caption : String, liked : Bool }
+initialModel : Model
 initialModel =
     { url = baseUrl ++ "1.jpg"
     , caption = "Surfing"
@@ -19,12 +31,7 @@ initialModel =
     }
 
 
-type Msg
-    = Like
-    | Unlike
-
-
-update : Msg -> { url : String, caption : String, liked : Bool } -> { url : String, caption : String, liked : Bool }
+update : Msg -> Model -> Model
 update msg model =
     case msg of
         Like ->
@@ -34,7 +41,7 @@ update msg model =
             { model | liked = False }
 
 
-viewDetailedPhoto : { url : String, caption : String, liked : Bool } -> Html Msg
+viewDetailedPhoto : Model -> Html Msg
 viewDetailedPhoto { url, caption, liked } =
     let
         buttonClass =
@@ -67,7 +74,7 @@ viewDetailedPhoto { url, caption, liked } =
         ]
 
 
-view : { url : String, caption : String, liked : Bool } -> Html Msg
+view : Model -> Html Msg
 view model =
     div []
         [ div [ class "header" ]
@@ -78,7 +85,7 @@ view model =
         ]
 
 
-main : Program () { url : String, caption : String, liked : Bool } Msg
+main : Program () Model Msg
 main =
     Browser.sandbox
         { init = initialModel
