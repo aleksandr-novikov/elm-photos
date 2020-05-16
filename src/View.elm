@@ -51,8 +51,8 @@ viewContent model =
                 ]
 
 
-viewLoveButton : Photo -> Html Msg
-viewLoveButton photo =
+viewLikeButton : Photo -> Html Msg
+viewLikeButton photo =
     let
         buttonClass =
             if photo.liked then
@@ -111,12 +111,12 @@ viewComments photo =
         ]
 
 
-viewDetailedPhoto : Photo -> Html Msg
-viewDetailedPhoto photo =
+viewPhotoDetails : Photo -> Html Msg
+viewPhotoDetails photo =
     div [ class "detailed-photo" ]
         [ img [ src photo.url ] []
         , div [ class "photo-info" ]
-            [ viewLoveButton photo
+            [ viewLikeButton photo
             , h2 [ class "caption" ] [ text photo.caption ]
             , viewComments photo
             ]
@@ -127,7 +127,7 @@ viewFeed : Maybe Feed -> Html Msg
 viewFeed maybeFeed =
     case maybeFeed of
         Just feed ->
-            div [] (List.map viewDetailedPhoto feed)
+            div [] (List.map viewPhotoDetails feed)
 
         Nothing ->
             div [ class "loading-feed" ]

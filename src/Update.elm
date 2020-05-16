@@ -34,8 +34,8 @@ subscriptions _ =
         (LoadStreamPhoto << decodeString photoDecoder)
 
 
-saveNewComment : Photo -> Photo
-saveNewComment photo =
+saveComment : Photo -> Photo
+saveComment photo =
     let
         comment =
             String.trim photo.newComment
@@ -98,7 +98,7 @@ update msg model =
 
         SaveComment id ->
             ( { model
-                | feed = updateFeed saveNewComment id model.feed
+                | feed = updateFeed saveComment id model.feed
               }
             , Cmd.none
             )
